@@ -1,3 +1,4 @@
+import java.util.Scanner;
 interface Document {
     void Open();
 }
@@ -20,6 +21,12 @@ class Letter implements Document {
     @Override
     public void Open() {
         System.out.println("Open Letter");
+    }
+}
+class Invoice implements Document {
+    @Override
+    public void Open() {
+        System.out.println("Open Invoice");
     }
 }
 
@@ -47,19 +54,44 @@ class LetterCreator extends DocumentCreator {
         return new Letter();
     }
 }
+class InvoiceCreator extends DocumentCreator {
+    @Override
+    public Document createDocument() {
+        return new Invoice();
+    }
+}
 
 public class main2 {
     public static void main(String[] args) {
         DocumentCreator reportCreator = new ReportCreator();
         Document report = reportCreator.createDocument();
-        report.Open();
 
         DocumentCreator resumeCreator = new ResumeCreator();
         Document resume = resumeCreator.createDocument();
-        resume.Open();
 
         DocumentCreator letterCreator = new LetterCreator();
         Document letter = letterCreator.createDocument();
-        letter.Open();
+
+        DocumentCreator invoiceCreator = new InvoiceCreator();
+        Document invoice = invoiceCreator.createDocument();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("1- report 2- resume 3- letter 4-invoice");
+        int num = scanner.nextInt();
+        switch (num) {
+            case 1:
+                report.Open();
+                break;
+            case 2:
+                resume.Open();
+                break;
+            case 3:
+                letter.Open();
+                break;
+            case 4:
+                invoice.Open();
+                break;
+            default:
+                System.out.println("ot 1 do 4");
+        }
     }
 }
